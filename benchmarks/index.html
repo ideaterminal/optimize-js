@@ -30,7 +30,7 @@ svg {
     display: block;
 }
 
-#plot-container {
+.gallery {
   display: none;
 }
 
@@ -46,7 +46,7 @@ svg {
 
 </style>
 <script>
-  window.loadCount = 50;
+  window.loadCount = 10;
 </script>
 </head>
 <body>
@@ -70,40 +70,39 @@ npm run benchmark</code></pre>
   <button type=button onclick="loadScript('immutable.min.optimized.js', loadCount)">Immutable min+opt</button>
 </div>
 <div>
-  <button type=button onclick="loadScript('jquery', 'jquery.js', loadCount)">jQuery</button>
-  <button type=button onclick="loadScript('jquery', 'jquery.optimized.js', loadCount)">jQuery opt</button>
-  <button type=button onclick="loadScript('jquery', 'jquery.min.js', loadCount)">jQuery min</button>
-  <button type=button onclick="loadScript('jquery', 'jquery.min.optimized.js', loadCount)">jQuery min+opt</button>
+  <button type=button onclick="loadScript('jquery.js', loadCount)">jQuery</button>
+  <button type=button onclick="loadScript('jquery.optimized.js', loadCount)">jQuery opt</button>
+  <button type=button onclick="loadScript('jquery.min.js', loadCount)">jQuery min</button>
+  <button type=button onclick="loadScript('jquery.min.optimized.js', loadCount)">jQuery min+opt</button>
 </div>
 <div>
-  <button type=button onclick="loadScript('lodash', 'lodash.js', loadCount)">Lodash</button>
-  <button type=button onclick="loadScript('lodash', 'lodash.optimized.js', loadCount)">Lodash opt</button>
-  <button type=button onclick="loadScript('lodash', 'lodash.min.js', loadCount)">Lodash min</button>
-  <button type=button onclick="loadScript('lodash', 'lodash.min.optimized.js', loadCount)">Lodash min+opt</button>
+  <button type=button onclick="loadScript('lodash.js', loadCount)">Lodash</button>
+  <button type=button onclick="loadScript('lodash.optimized.js', loadCount)">Lodash opt</button>
+  <button type=button onclick="loadScript('lodash.min.js', loadCount)">Lodash min</button>
+  <button type=button onclick="loadScript('lodash.min.optimized.js', loadCount)">Lodash min+opt</button>
 </div>
 <div>
-  <button type=button onclick="loadScript('ember', 'ember.js', loadCount)">Ember</button>
-  <button type=button onclick="loadScript('ember', 'ember.optimized.js', loadCount)">Ember opt</button>
-  <button type=button onclick="loadScript('ember', 'ember.min.js', loadCount)">Ember min</button>
-  <button type=button onclick="loadScript('ember', 'ember.min.optimized.js', loadCount)">Ember min+opt</button>
+  <button type=button onclick="loadScript('ember.js', loadCount)">Ember</button>
+  <button type=button onclick="loadScript('ember.optimized.js', loadCount)">Ember opt</button>
+  <button type=button onclick="loadScript('ember.min.js', loadCount)">Ember min</button>
+  <button type=button onclick="loadScript('ember.min.optimized.js', loadCount)">Ember min+opt</button>
 </div>
 <div>
-  <button type=button onclick="loadScript('pouchdb', 'pouchdb.js', loadCount)">PouchDB</button>
-  <button type=button onclick="loadScript('pouchdb', 'pouchdb.optimized.js', loadCount)">PouchDB opt</button>
-  <button type=button onclick="loadScript('pouchdb', 'pouchdb.min.js', loadCount)">PouchDB min</button>
-  <button type=button onclick="loadScript('pouchdb', 'pouchdb.min.optimized.js', loadCount)">PouchDB min+opt</button>
+  <button type=button onclick="loadScript('pouchdb.js', loadCount)">PouchDB</button>
+  <button type=button onclick="loadScript('pouchdb.optimized.js', loadCount)">PouchDB opt</button>
+  <button type=button onclick="loadScript('pouchdb.min.js', loadCount)">PouchDB min</button>
+  <button type=button onclick="loadScript('pouchdb.min.optimized.js', loadCount)">PouchDB min+opt</button>
 </div>
 <div>
-  <button type=button onclick="loadScript('three', 'three.js', loadCount)">Three.js</button>
-  <button type=button onclick="loadScript('three', 'three.optimized.js', loadCount)">Three.js opt</button>
-  <button type=button onclick="loadScript('three', 'three.min.js', loadCount)">Three.js min</button>
-  <button type=button onclick="loadScript('three', 'three.min.optimized.js', loadCount)">Three.js min+opt</button>
+  <button type=button onclick="loadScript('three.js', loadCount)">Three.js</button>
+  <button type=button onclick="loadScript('three.optimized.js', loadCount)">Three.js opt</button>
+  <button type=button onclick="loadScript('three.min.js', loadCount)">Three.js min</button>
+  <button type=button onclick="loadScript('three.min.optimized.js', loadCount)">Three.js min+opt</button>
 </div>
 <div>
 <pre id=display></pre>
 </div>
 
-<div id="plot-container">
 <div class="gallery" id="immutable">
     <svg></svg>
 </div>
@@ -116,12 +115,11 @@ npm run benchmark</code></pre>
 <div class="gallery" id="ember">
     <svg></svg>
 </div>
-<div class="gallery" id="pouch">
+<div class="gallery" id="pouchdb">
     <svg></svg>
 </div>
 <div class="gallery" id="three">
     <svg></svg>
-</div>
 </div>
 
 <script>
@@ -130,7 +128,7 @@ var boxPlotResults = {
   'immutable': [],
   'lodash': [],
   'ember': [],
-  'pouch': [],
+  'pouchdb': [],
   'three': [],
 }
 
@@ -311,7 +309,7 @@ function addToBoxplotResult(result){
 
 // Plot boxplot
 function plot(script, data){
-  document.getElementById('plot-container').style.display = 'block'
+  document.getElementById(script).style.display = 'block'
 
   var min = 99999;
   var max = -99999;

@@ -46,7 +46,7 @@ svg {
 
 </style>
 <script>
-  window.loadCount = 20;
+  window.loadCount = 50;
 </script>
 </head>
 <body>
@@ -139,22 +139,22 @@ function loadScript(src, num, cb) {
   window.__onDone = function (time) {
     times.push(time)
     if (--num > 0) {
-      load();
+      load()
     } else {
-      var stats = window.jStat(times);
-      var median = stats.median();
+      var stats = window.jStat(times)
+      var median = stats.median()
       if (cb) {
         cb(stats)
       } else {
-        var parts = src.split('.');
+        var parts = src.split('.')
         scriptName = parts[0]
         addToBoxplotResult({
           scriptName: parts[0],
           type: '.'+parts.slice(1, parts.length).join('.'),
           stats: stats
         })
-        plot(scriptName, boxPlotResults[scriptName]);
-        display.innerHTML += 'Median: ' + median + 'ms, ' + 'stdev: ' + stats.stdev() + 'ms\n'; 
+        plot(scriptName, boxPlotResults[scriptName])
+        display.innerHTML += 'Median: ' + median + 'ms, ' + 'stdev: ' + stats.stdev() + 'ms\n'
       }
     }
   }
@@ -191,13 +191,13 @@ function runAll() {
     columns.forEach(function(col){
       tableHtml += ' ' + col + ' | '
     })
-    tableHtml += '\n';
+    tableHtml += '\n'
 
     // give proper padding for each column
     columns.forEach(function(col, idx){
       tableHtml += ' ' + ('--------------').slice(-col.length) + ' | '
     })
-    tableHtml += '\n';
+    tableHtml += '\n'
 
     var totalUnopt = 0
     var totalOpt = 0
@@ -216,26 +216,26 @@ function runAll() {
       columns.forEach(function(col, idx){
         switch (idx) {
           case 0:
-            tableHtml += ' ' + padLeft(scriptNames[script], col.length) + ' | ';
-            break;
+            tableHtml += ' ' + padLeft(scriptNames[script], col.length) + ' | '
+            break
           case 1:
-            tableHtml += ' ' + padLeft(jsTime.toFixed(2), col.length) + ' | ';
-            break;
+            tableHtml += ' ' + padLeft(jsTime.toFixed(2), col.length) + ' | '
+            break
           case 2:
-            tableHtml += ' ' + padLeft(optTime.toFixed(2), col.length) + ' | ';
-            break;
+            tableHtml += ' ' + padLeft(optTime.toFixed(2), col.length) + ' | '
+            break
           case 3:
-            tableHtml += ' ' + padLeft('**' + (100 * (jsTime - optTime) / jsTime).toFixed(2) + '%**', col.length) + ' | ';
-            break;
+            tableHtml += ' ' + padLeft('**' + (100 * (jsTime - optTime) / jsTime).toFixed(2) + '%**', col.length) + ' | '
+            break
           case 4:
-            tableHtml += ' ' + padLeft(minTime.toFixed(2) + 'ms', col.length) + ' | ';
-            break;
+            tableHtml += ' ' + padLeft(minTime.toFixed(2) + 'ms', col.length) + ' | '
+            break
           case 5:
-            tableHtml += ' ' + padLeft(minOptTime.toFixed(2) + 'ms', col.length) + ' | ';
-            break;
+            tableHtml += ' ' + padLeft(minOptTime.toFixed(2) + 'ms', col.length) + ' | '
+            break
           case 6:
-            tableHtml += ' ' + padLeft('**' + (100 * (minTime - minOptTime) / minTime).toFixed(2) + '%**', col.length) + ' |\n';
-            break;
+            tableHtml += ' ' + padLeft('**' + (100 * (minTime - minOptTime) / minTime).toFixed(2) + '%**', col.length) + ' |\n'
+            break
         }
       })     
     })
@@ -267,8 +267,8 @@ function runAll() {
     }
 
     loadScript(script + type, window.loadCount, function (stats) {
-      var median = stats.median();
-      var scriptName = script;
+      var median = stats.median()
+      var scriptName = script
       var newData = {
         script: script+type,
         scriptName: script,
@@ -289,8 +289,8 @@ function runAll() {
 }
 
 function addToBoxplotResult(result){
-  var fullName = result.scriptName + result.type;
-  var found = false;
+  var fullName = result.scriptName + result.type
+  var found = false
   // remove existing data so that only latest data is plotted
   boxPlotResults[result.scriptName].forEach(function(obj, idx){
     if (obj.label === fullName) {
@@ -320,18 +320,18 @@ function plot(script, data){
   data.forEach(function(obj){
     min = min > obj.values.whisker_low ? obj.values.whisker_low : min;
     max = max < obj.values.whisker_high ? obj.values.whisker_high : max; 
-  });
+  })
 
   nv.addGraph(function() {
     var chart = nv.models.boxPlotChart()
         .x(function(d) { return d.label })
         .staggerLabels(true)
         .maxBoxWidth(75) // prevent boxes from being incredibly wide
-        .yDomain([min, max]);
+        .yDomain([min, max])
 
     d3.select('#' + script + ' svg')
         .datum(data)
-        .call(chart);
+        .call(chart)
 
     nv.utils.windowResize(chart.update);
 
@@ -343,8 +343,8 @@ function plot(script, data){
       element.insertBefore(header, element.firstChild)
     }
 
-    return chart;
-  });  
+    return chart
+  })
 }
 
 </script>

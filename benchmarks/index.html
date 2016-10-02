@@ -318,8 +318,8 @@ function plot(script, data){
 
   // get whisker values.
   data.forEach(function(obj){
-    min = min > obj.values.whisker_low ? obj.values.whisker_low : min;
-    max = max < obj.values.whisker_high ? obj.values.whisker_high : max; 
+    min = min > obj.values.whisker_low ? obj.values.whisker_low : min
+    max = max < obj.values.whisker_high ? obj.values.whisker_high : max
   })
 
   nv.addGraph(function() {
